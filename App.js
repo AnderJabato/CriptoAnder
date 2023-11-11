@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { NavigationContainer } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -29,35 +30,37 @@ const App = () => {
   }, []);
   console.log(coins);
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#141414" />
+    <NavigationContainer>
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#141414" />
 
-      <View style={styles.header}>
-        <Text style={styles.title}>CryptoMarket</Text>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search a Coin"
-          placeholderTextColor="#858585"
-          onChangeText={(text) => text && setSearch(text)}
+        <View style={styles.header}>
+          <Text style={styles.title}>CryptoMarket</Text>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search a Coin"
+            placeholderTextColor="#858585"
+            onChangeText={(text) => text && setSearch(text)}
+          />
+        </View>
+
+        <FlatList
+          style={styles.list}
+          data={coins && coins.filter(
+            (coin) =>
+              coin.symbol.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+          )}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => <CoinItem coin={item} onClick={()=> console.log("click")}  />}
+          refreshing={refreshing}
+          onRefresh={async () => {
+            setRefreshing(true);
+            await loadData();
+            setRefreshing(false);
+          }}
         />
       </View>
-
-      <FlatList
-        style={styles.list}
-        data={coins && coins.filter(
-          (coin) =>
-            coin.symbol.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-        )}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <CoinItem coin={item} />}
-        refreshing={refreshing}
-        onRefresh={async () => {
-          setRefreshing(true);
-          await loadData();
-          setRefreshing(false);
-        }}
-      />
-    </View>
+    </NavigationContainer>
   );
 };
 

@@ -1,13 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-
 const CoinItem = ({ coin }) => (
   <View style={styles.containerItem}>
     <View style={styles.coinName}>
       <Image source={{ uri: coin.image }} style={styles.image} />
       <View style={styles.containerNames}>
-        <Text style={styles.text}>{coin.name}</Text>
-        <Text style={styles.textSymbol}>{coin.symbol}</Text>
+        <Text style={styles.textSymbol}>{(coin.symbol).slice(0,3)}</Text>
       </View>
     </View>
     <View>
@@ -25,7 +23,6 @@ const CoinItem = ({ coin }) => (
     </View>
   </View>
 );
-
 const styles = StyleSheet.create({
   containerItem: {
     backgroundColor: "#121212",
