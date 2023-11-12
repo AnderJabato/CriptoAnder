@@ -1,96 +1,23 @@
-import React, { useEffect, useState } from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  FlatList,
-  TextInput,
-} from "react-native";
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from "react";
 import CoinItem from "./components/CoinItem";
+import CoinMarket from "./components/CoinMarket";
+import Home from "./components/Home";
 
 const App = () => {
-  const [coins, setCoins] = useState();
-  const [refreshing, setRefreshing] = useState(false);
-  const [search, setSearch] = useState("");
 
-  const loadData = async () => {
-    const res = await fetch(
-      "https://api.binance.com/api/v3/ticker/24hr"
-    );
-    const data = await res.json();
-    const filteredData = data.filter((item) => item.symbol.includes("USDT"));
-    setCoins(filteredData);
-  };
- 
-  useEffect(() => {
-    loadData();
-  }, []);
-  console.log(coins);
+  const Stack = createNativeStackNavigator();
+
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#141414" />
-
-        <View style={styles.header}>
-          <Text style={styles.title}>CryptoMarket</Text>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search a Coin"
-            placeholderTextColor="#858585"
-            onChangeText={(text) => text && setSearch(text)}
-          />
-        </View>
-
-        <FlatList
-          style={styles.list}
-          data={coins && coins.filter(
-            (coin) =>
-              coin.symbol.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-          )}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <CoinItem coin={item} onClick={()=> console.log("click")}  />}
-          refreshing={refreshing}
-          onRefresh={async () => {
-            setRefreshing(true);
-            await loadData();
-            setRefreshing(false);
-          }}
-        />
-      </View>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="CoinItem" component={CoinItem} />
+        <Stack.Screen name="CoinMarket" component={CoinMarket} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#141414",
-    flex: 1,
-    alignItems: "center",
-  },
-  header: {
-    flexDirection: "row",
-    width: "90%",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 20,
-    color: "#fff",
-    marginTop: 10,
-  },
-  list: {
-    width: "90%",
-  },
-  searchInput: {
-    color: "#fff",
-    borderBottomColor: "#4657CE",
-    borderBottomWidth: 1,
-    width: "40%",
-    textAlign: "center",
-  },
-});
 
 export default App;

@@ -1,34 +1,48 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-const CoinItem = ({ coin }) => (
-  <View style={styles.containerItem}>
-    <View style={styles.coinName}>
-      <Image source={{ uri: coin.image }} style={styles.image} />
-      <View style={styles.containerNames}>
-        <Text style={styles.textSymbol}>{(coin.symbol).slice(0,3)}</Text>
-      </View>
-    </View>
-    <View>
-      <Text style={styles.textPrice}>${coin.lastPrice}</Text>
-      <Text
-        style={[
-          styles.pricePercentage,
-          coin.priceChangePercent> 0
-            ? styles.priceUp
-            : styles.priceDown,
-        ]}
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+
+const CoinItem = (props) => {
+
+  const { coin } = props;
+
+  return (
+    <TouchableOpacity
+      onPress={props.onPress}
+    >
+      <View
+        style={styles.containerItem}
       >
-        {coin.priceChangePercent}%
-      </Text>
-    </View>
-  </View>
-);
+        <View style={styles.coinName}>
+          <View style={styles.containerNames}>
+            <Text style={styles.textSymbol}>{(coin.symbol).slice(0, 3)}</Text>
+          </View>
+        </View>
+        <View>
+          <Text style={styles.textPrice}>${coin.lastPrice}</Text>
+          <Text
+            style={[
+              styles.pricePercentage,
+              coin.priceChange > 0
+                ? styles.priceUp
+                : styles.priceDown,
+            ]}
+          >
+            {coin.priceChange}%
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
+};
+
 const styles = StyleSheet.create({
   containerItem: {
     backgroundColor: "#121212",
     paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    cursor: "pointer"
   },
   containerNames: {
     marginLeft: 10,

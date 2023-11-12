@@ -1,29 +1,53 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native-web";
 
-const CoinMarket = ({CoinInfo}) => {
 
-    return (
-        <View onPress={() => Navigation.push(props.componentId, {
-            component: {
-                name: 'CoinMarket',
-                options: {
-                    topBar: {
-                        title: {
-                            text: 'CoinMarket'
-                        }
-                    }
-                }
-            }
-        })}>
-        </View>
-    );
-
+const CoinMarket = ({ coin }) => {
+  console.log(coin)
+  return (
+    <View style={styles.containerItem}>
+      <Text style={styles.text}>CoinMarket</Text>
+    </View>
+  )
 }
 
+const styles = StyleSheet.create({
+  containerItem: {
+    backgroundColor: "#121212",
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    cursor: "pointer"
+  },
+  containerNames: {
+    marginLeft: 10,
+  },
+  coinName: {
+    flexDirection: "row",
+  },
+  text: {
+    color: "#fff",
+  },
+  textPrice: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  pricePercentage: {
+    textAlign: "right",
+  },
+  priceUp: {
+    color: "#00B589",
+  },
+  priceDown: {
+    color: "#fc4422",
+  },
+  image: {
+    width: 30,
+    height: 30,
+  },
+  textSymbol: {
+    color: "#434343",
+    textTransform: "uppercase",
+  },
+});
 
-
-
-
-
-export default CoinMarket;
+export default CoinMarket
