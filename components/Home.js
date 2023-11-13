@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import CoinItem from "./CoinItem";
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [coins, setCoins] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState("");
