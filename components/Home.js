@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import CoinItem from "./CoinItem";
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const [coins, setCoins] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState("");
@@ -47,7 +47,10 @@ const Home = ({navigation}) => {
             coin.symbol.toLocaleLowerCase().includes(search.toLocaleLowerCase())
         )}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <CoinItem coin={item} onPress={() => navigation.navigate("CoinMarket", { item })} />}
+        renderItem={({ item }) => <CoinItem coin={item} onPress={() => {
+          navigation.navigate("CoinMarket", { item: item })
+        }
+        } />}
         refreshing={refreshing}
         onRefresh={async () => {
           setRefreshing(true);
