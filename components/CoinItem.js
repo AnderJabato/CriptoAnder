@@ -16,6 +16,7 @@ const CoinItem = (props) => {
         <View style={styles.coinName}>
           <View style={styles.containerNames}>
             <Text style={styles.textSymbol}>{(coin.symbol).slice(0, 3)}</Text>
+            <Text style={styles.textSymbol2}>{(coin.symbol)}</Text>
           </View>
         </View>
         <View>
@@ -71,9 +72,15 @@ const styles = StyleSheet.create({
     height: 30,
   },
   textSymbol: {
+    color: "#fff",
+    textTransform: "uppercase",
+  },
+  textSymbol2: {
     color: "#434343",
     textTransform: "uppercase",
   },
 });
 
 export default CoinItem;
+
+
